@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getWeatherList} from "../../actions/WeatherActions";
 import Loading from "../Loading";
@@ -6,17 +6,19 @@ import _ from "lodash";
 import {Grid} from "@material-ui/core";
 import WeatherWidget from "./WeatherWidget";
 
-const Weather = (props) => {
+const Weather = () => {
 
     const dispatch = useDispatch();
     const weatherList = useSelector(state => state.WeatherList);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchData = () => {
             dispatch(getWeatherList());
         };
-        fetchData();
-    }, [dispatch]);
+        if(weatherList.data.length === 0) {
+            fetchData();
+        }
+    }, [dispatch, weatherList.data]);
 
     const showData = () => {
         if(!_.isEmpty(weatherList.data)) {

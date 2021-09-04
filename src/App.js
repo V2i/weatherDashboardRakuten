@@ -1,8 +1,8 @@
 import './App.css';
 import Weather from "./component/Weather/Weather";
+import WeatherList from "./component/Weather/WeatherList";
 import Navbar from "./component/Navbar";
 import {Switch, Route, Redirect} from "react-router-dom";
-import WeatherWidget from "./component/Weather/WeatherWidget";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         </nav>
         <Switch>
             <Route path={"/home"} exact component={Weather}/>
-            <Route path={"/settings"} exact component={WeatherWidget}/>
+            <Route path={"/settings"} exact component={WeatherList}/>
             <Redirect to={"/home"}/>
         </Switch>
     </div>
