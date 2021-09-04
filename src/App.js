@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import Weather from "./component/Weather/Weather";
+import Navbar from "./component/Navbar";
+import {Switch, Route, Redirect} from "react-router-dom";
+import WeatherWidget from "./component/Weather/WeatherWidget";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <nav>
+            <Navbar/>
+        </nav>
+        <Switch>
+            <Route path={"/home"} exact component={Weather}/>
+            <Route path={"/settings"} exact component={WeatherWidget}/>
+            <Redirect to={"/home"}/>
+        </Switch>
     </div>
   );
 }
