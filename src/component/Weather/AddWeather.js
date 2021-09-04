@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Grid, TextField, Button} from "@material-ui/core";
 import {addWeatherToList} from "../../actions/WeatherActions";
 
 const AddWeather = ({open = false, handleClose}) => {
 
     const dispatch = useDispatch();
+    const [city, setCity] = useState("");
 
     const addWeather = () => {
         handleClose()
-        dispatch(addWeatherToList("Marseille"));
+        dispatch(addWeatherToList(city));
     };
 
     return(
@@ -24,8 +25,8 @@ const AddWeather = ({open = false, handleClose}) => {
                 <DialogContentText id="alert-dialog-description">
 
                     <Grid container spacing={3}>
-                        <Grid item xs={4}>
-                            <TextField name="cityName" label="Name" />
+                        <Grid item xs={10}>
+                            <TextField name="cityName" label="Name" required value={city} onChange={e => setCity(e.target.value)}/>
                         </Grid>
                     </Grid>
                 </DialogContentText>
