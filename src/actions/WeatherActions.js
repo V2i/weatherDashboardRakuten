@@ -1,7 +1,8 @@
 import axios from "axios";
-import APIKEY from "../API";
+//import APIKEY from "../API";
 
 const APIURL = "https://api.openweathermap.org/data/2.5/weather?";
+const APIKEY = process.env.APIKEY;
 
 export const getWeatherList = () => async dispatch => {
 
