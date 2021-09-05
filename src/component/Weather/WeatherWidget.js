@@ -1,26 +1,15 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import {Card, CardContent, Typography } from "@material-ui/core";
 import Icon from '@material-ui/core/Icon';
-
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 300,
-    },
-    source: {
-        fontSize: 10,
-    },
-});
+import {weatherIcons} from "../../WeatherIcons";
 
 const WeatherWidget = ({data}) => {
 
-    const classes = useStyles();
-
     return (
         <div>
-            <Card className={classes.root}>
+            <Card>
                 <CardContent>
-                    <Typography className={classes.source} color="textSecondary" gutterBottom>
+                    <Typography color="textSecondary" gutterBottom variant="body5">
                         OpenWeather Data
                     </Typography>
                     <Typography variant="h4" component="h2">
@@ -29,7 +18,10 @@ const WeatherWidget = ({data}) => {
                     <Typography variant="h6" component="p">
                         {data.main.temp}°C
                     </Typography>
-                    <Icon className="fa fa-cloud-sun" fontSize="large"/>
+                    <Typography variant="body2" component="p">
+                        {data.weather[0].description}
+                    </Typography>
+                    <Icon className={weatherIcons(data.weather[0].main)} fontSize="large"/>
                 </CardContent>
             </Card>
         </div>

@@ -25,7 +25,7 @@ const AddWeather = ({open = false, handleClose}) => {
                 <DialogContentText id="alert-dialog-description">
 
                     <Grid container spacing={3}>
-                        <Grid item xs={10}>
+                        <Grid item xs={12}>
                             <TextField name="cityName" label="Name" required value={city} onChange={e => setCity(e.target.value)}/>
                         </Grid>
                     </Grid>

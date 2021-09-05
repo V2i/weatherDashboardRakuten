@@ -13,6 +13,8 @@ import {
     TableBody,
     Paper,
     IconButton,
+    TablePagination,
+    TableFooter
 } from "@material-ui/core";
 import {Delete, Add} from "@material-ui/icons";
 
@@ -23,8 +25,20 @@ const WeatherList = () => {
     const [open, setOpen] = useState(false);
 
     const changeValueOpen = (value) => {
-        setOpen(value)
-    }
+        setOpen(value);
+    };
+
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     useEffect(() => {
         const fetchData = () => {
@@ -37,13 +51,13 @@ const WeatherList = () => {
 
     const removeWeather = (id) => {
         dispatch(deleteWeatherFromList(id, weatherList));
-    }
+    };
 
     const showData = () => {
         if(!_.isEmpty(weatherList.data)) {
             return (
                 <TableContainer component={Paper}>
-                    <Table stickyHeader size="small" aria-label="a dense table">
+                    <Table stickyHeader size="small" aria-label="custom pagination table">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{'font-weight':'bold'}}>
@@ -72,6 +86,21 @@ const WeatherList = () => {
                                 </TableRow>
                             ))}
                         </TableBody>
+                        <TableFooter>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                colSpan={3}
+                                count={weatherList.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: { 'aria-label': 'rows per page' },
+                                    native: true,
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </TableFooter>
                     </Table>
                 </TableContainer>
             )
