@@ -1,8 +1,6 @@
 import axios from "axios";
-//import APIKEY from "../API";
 
 const APIURL = "https://api.openweathermap.org/data/2.5/weather?";
-const APIKEY = process.env.APIKEY;
 
 export const getWeatherList = () => async dispatch => {
 
@@ -12,11 +10,11 @@ export const getWeatherList = () => async dispatch => {
             type: "WEATHER_LIST_LOADING",
         });
 
-        const resMontpellier = await axios.get(`${APIURL}q=Montpellier&units=metric${APIKEY}`);
+        const resMontpellier = await axios.get(`${APIURL}q=Montpellier&units=metric&appid=${process.env.REACT_APP_API_KEY}`);
 
-        const resLondon = await axios.get(`${APIURL}q=London&units=metric${APIKEY}`);
+        const resLondon = await axios.get(`${APIURL}q=London&units=metric&appid=${process.env.REACT_APP_API_KEY}`);
 
-        const resParis = await axios.get(`${APIURL}q=Paris&units=metric${APIKEY}`);
+        const resParis = await axios.get(`${APIURL}q=Paris&units=metric&appid=${process.env.REACT_APP_API_KEY}`);
 
         dispatch({
             type: "WEATHER_LIST_SUCCESS",
@@ -54,7 +52,7 @@ export const addWeatherToList = (name) => async dispatch => {
 
     try{
 
-        const res = await axios.get(`${APIURL}q=${name}&units=metric${APIKEY}`);
+        const res = await axios.get(`${APIURL}q=${name}&units=metric&appid=${process.env.REACT_APP_API_KEY}`);
 
         dispatch({
             type: "WEATHER_LIST_ADD",
