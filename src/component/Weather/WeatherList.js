@@ -23,13 +23,12 @@ const WeatherList = () => {
     const dispatch = useDispatch();
     const weatherList = useSelector(state => state.WeatherList);
     const [open, setOpen] = useState(false);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const changeValueOpen = (value) => {
         setOpen(value);
     };
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -57,7 +56,7 @@ const WeatherList = () => {
         if(!_.isEmpty(weatherList.data)) {
             return (
                 <TableContainer component={Paper}>
-                    <Table stickyHeader size="small" aria-label="custom pagination table">
+                    <Table size="small" aria-label="custom pagination table">
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{'font-weight':'bold'}}>
@@ -72,7 +71,11 @@ const WeatherList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {weatherList.data.map((row) => (
+                            {
+                                (rowsPerPage > 0
+                                        ? weatherList.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        : weatherList.data
+                                ).map((row) => (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
                                         {row.name}
@@ -88,15 +91,11 @@ const WeatherList = () => {
                         </TableBody>
                         <TableFooter>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                colSpan={3}
-                                count={weatherList.length}
+                                rowsPerPageOptions={[5, 10, 25]}
+                                component="div"
+                                count={weatherList.data.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
-                                SelectProps={{
-                                    inputProps: { 'aria-label': 'rows per page' },
-                                    native: true,
-                                }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                             />

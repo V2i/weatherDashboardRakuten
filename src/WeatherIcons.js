@@ -13,6 +13,8 @@ export const  weatherIcons = (weather) => {
             return "fas fa-smog";
         case("Mist"):
             return "fas fa-smog";
+        case("Haze"):
+            return "fas fa-smog";
         default:
             return "fas fa-rainbow";
     }
